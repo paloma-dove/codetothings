@@ -4,20 +4,16 @@
 用于完成从代码到实物课程的相关作业及基本测试
 
 #### 软件架构
-软件架构说明
+这是一个html的网站
 
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  git clone https://gitee.com/palomadove/codestothings.git
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  浏览器打开即可
 
 #### 参与贡献
 

@@ -4,19 +4,15 @@
 用于完成从代码到实物课程的相关作业及基本测试
 
 #### Software Architecture
-Software architecture description
+这是一个html的网站
 
 #### Installation
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  git clone https://gitee.com/palomadove/codestothings.git
 
 #### Instructions
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  浏览器打开即可
 
 #### Contribution
 

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嵌入式作业日志</title>
+    <style>
+        body { font-family: 'Microsoft YaHei', sans-serif; margin: 40px; background: #f5f5f5; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        h2 { color: #007bff; margin-top: 30px; }
+        .entry { border-left: 4px solid #007bff; padding-left: 20px; margin: 20px 0; background: #f9f9f9; }
+        .file-list { list-style: none; padding: 0; }
+        .file-list li { margin: 10px 0; }
+        .file-list a { text-decoration: none; color: #007bff; }
+        .file-list a:hover { text-decoration: underline; }
+        img { max-width: 100%; height: auto; margin: 10px 0; border: 1px solid #ddd; }
+        video { max-width: 100%; }
+        .footer { margin-top: 40px; text-align: center; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>嵌入式系统作业日志</h1>
+        <p><strong>项目名称：</strong>智能小车控制</p>
+        <p><strong>作者：</strong>张三</p>
+        <p><strong>Gitee 仓库：</strong><a href="https://gitee.com/zhangsan/embedded-log" target="_blank">https://gitee.com/zhangsan/embedded-log</a></p>
+
+        <h2>作业记录</h2>
+
+        <!-- 作业1 -->
+        <div class="entry">
+            <h3>作业一：环境搭建与LED闪烁</h3>
+            <p><strong>日期：</strong>2025-03-07</p>
+            <p><strong>内容：</strong>完成开发环境安装，编写第一个STM32程序，实现LED闪烁。</p>
+            <p><strong>相关文件：</strong></p>
+            <ul class="file-list">
+                <li>📁 嵌入式代码：<a href="../嵌入式代码/led_blink.c" target="_blank">led_blink.c</a></li>
+                <li>📁 图纸：<a href="../图纸/原理图_v1.pdf" target="_blank">原理图_v1.pdf</a></li>
+                <li>📷 照片：<a href="../照片/led_test.jpg" target="_blank">led_test.jpg</a>（实物图）</li>
+                <li>🎥 视频：<a href="https://www.bilibili.com/video/BV1aL4y1x7Qc" target="_blank">演示视频（B站）</a></li>
+            </ul>
+            <!-- 直接显示图片示例 -->
+            <img src="../照片/led_test.jpg" alt="LED测试照片" width="400">
+        </div>
+
+        <!-- 作业2 -->
+        <div class="entry">
+            <h3>作业二：按键控制蜂鸣器</h3>
+            <p><strong>日期：</strong>2025-03-14</p>
+            <p><strong>内容：</strong>添加按键检测，按下时蜂鸣器鸣响。</p>
+            <p><strong>相关文件：</strong></p>
+            <ul class="file-list">
+                <li>📁 嵌入式代码：<a href="../嵌入式代码/buzzer.c" target="_blank">buzzer.c</a></li>
+                <li>📁 图纸：<a href="../图纸/按键电路.pdf" target="_blank">按键电路.pdf</a></li>
+                <li>📷 照片：<a href="../照片/buzzer_test.jpg" target="_blank">buzzer_test.jpg</a></li>
+            </ul>
+        </div>
+
+        <!-- 更多作业... -->
+
+        <h2>文件索引</h2>
+        <p>仓库目录结构：</p>
+        <ul>
+            <li><a href="../嵌入式代码/" target="_blank">嵌入式代码/</a> - 所有源代码</li>
+            <li><a href="../图纸/" target="_blank">图纸/</a> - 硬件设计图纸</li>
+            <li><a href="../照片/" target="_blank">照片/</a> - 调试与实物照片</li>
+            <li><a href="../视频/" target="_blank">视频/</a> - 视频文件或链接文档</li>
+            <li><a href="index.html">html/index.html</a> - 日志入口（当前页）</li>
+        </ul>
+
+        <div class="footer">
+            &copy; 2025 张三 - 嵌入式作业日志
+        </div>
+    </div>
+</body>
+</html>
