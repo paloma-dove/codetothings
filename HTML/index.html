@@ -3,75 +3,669 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>嵌入式作业日志</title>
+    <meta name="description" content="吕豪的个人创客博客 - 记录嵌入式开发、物联网和智能创造的学习历程">
+    <meta name="keywords" content="创客,嵌入式开发,Arduino,STM32,物联网,智能硬件">
+    <title>创客日志 · 吕豪 - 嵌入式开发者与创客爱好者</title>
     <style>
-        body { font-family: 'Microsoft YaHei', sans-serif; margin: 40px; background: #f5f5f5; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
-        h2 { color: #007bff; margin-top: 30px; }
-        .entry { border-left: 4px solid #007bff; padding-left: 20px; margin: 20px 0; background: #f9f9f9; }
-        .file-list { list-style: none; padding: 0; }
-        .file-list li { margin: 10px 0; }
-        .file-list a { text-decoration: none; color: #007bff; }
-        .file-list a:hover { text-decoration: underline; }
-        img { max-width: 100%; height: auto; margin: 10px 0; border: 1px solid #ddd; }
-        video { max-width: 100%; }
-        .footer { margin-top: 40px; text-align: center; color: #777; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e6e9f0 100%);
+            color: #1e2b3c;
+            line-height: 1.7;
+            scroll-behavior: smooth;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .navbar-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar.scrolled {
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0077ff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .navbar .logo:hover {
+            color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            position: relative;
+        }
+        .navbar a:hover {
+            color: #0077ff;
+            background: rgba(0, 119, 255, 0.05);
+            transform: translateY(-2px);
+        }
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #0077ff;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .navbar a:hover::after {
+            width: 80%;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        /* 个人介绍卡片 */
+        .profile {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafd 100%);
+            border-radius: 28px;
+            padding: 3rem 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-start;
+            gap: 2.5rem;
+        }
+        .profile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0077ff, #00c6ff);
+        }
+        .profile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.12);
+        }
+        .profile-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+            border: 6px solid white;
+            overflow: hidden;
+            position: relative;
+        }
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .profile-avatar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 119, 255, 0.1), rgba(0, 198, 255, 0.1));
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .profile-content {
+            flex: 1;
+        }
+        .profile h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #0a1929;
+            letter-spacing: -0.8px;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #0a1929 0%, #0077ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .profile .subtitle {
+            font-size: 1.3rem;
+            color: #0077ff;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        .profile .description {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            max-width: 95%;
+            line-height: 1.8;
+        }
+        .skills {
+            background: linear-gradient(135deg, #f8fafd 0%, #e3f2fd 100%);
+            padding: 1.2rem 2rem;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.05rem;
+            color: #1e2b3c;
+            border: 1px solid rgba(0, 119, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .skills:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .skills span {
+            font-weight: 600;
+            color: #0077ff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            background: rgba(0, 119, 255, 0.1);
+            margin: 0 0.2rem;
+        }
+        /* 章节通用样式 */
+        .section {
+            background: linear-gradient(135deg, #ffffff 0%, #fafbfd 100%);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0a1929;
+            border-left: 8px solid #0077ff;
+            padding-left: 1.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .section h2::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #0077ff;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+        .section h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1e2b3c;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e8f0fe;
+        }
+        .phase {
+            margin-bottom: 3rem;
+            border-bottom: 1px dashed #e1e8f0;
+            padding-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        .phase:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .phase:hover {
+            border-bottom-color: #c5d9f1;
+        }
+        .phase p {
+            color: #334e68;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .file-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 1.5rem 0 1.2rem;
+            padding: 1.2rem 1.5rem;
+            background: linear-gradient(135deg, #f9fcff 0%, #f0f7ff 100%);
+            border-radius: 18px;
+            border: 1px solid rgba(0, 119, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .file-list:hover {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+            transform: translateX(5px);
+        }
+        .file-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .file-list li:hover {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .file-list a {
+            text-decoration: none;
+            color: #0077ff;
+            font-weight: 600;
+            border-bottom: 1px dotted transparent;
+            transition: all 0.3s ease;
+            padding: 0.2rem 0;
+        }
+        .file-list a:hover {
+            color: #0056b3;
+            border-bottom-color: #0077ff;
+            transform: translateY(-1px);
+        }
+        .project-img {
+            max-width: 100%;
+            border-radius: 18px;
+            border: 1px solid #e9eef3;
+            margin-top: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .project-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        footer {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            color: #5e6f8d;
+            font-size: 1rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        footer a {
+            color: #0077ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        footer a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 0;
+            }
+            .navbar-inner {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+            .navbar .logo {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            .navbar ul { 
+                gap: 0.8rem; 
+                flex-direction: column;
+                align-items: center;
+            }
+            .navbar a {
+                padding: 0.6rem 1.2rem;
+                width: 180px;
+                text-align: center;
+                font-size: 0.95rem;
+            }
+            .profile {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+                padding: 2rem 1.5rem;
+            }
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                margin: 0 auto;
+            }
+            .profile h1 { 
+                font-size: 2.2rem; 
+            }
+            .profile .description { 
+                max-width: 100%; 
+            }
+            .file-list { 
+                flex-direction: column; 
+                gap: 1rem; 
+                padding: 1rem;
+            }
+            .container {
+                padding: 0 1rem;
+                margin: 2rem auto;
+            }
+            .section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            .section h2 {
+                font-size: 1.8rem;
+                padding-left: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="#profile" class="logo">创客日志</a>
+            <ul>
+                <li><a href="#profile">个人介绍</a></li>
+                <li><a href="#course">课程过程</a></li>
+                <li><a href="#summary">课程总结</a></li>
+                <li><a href="#midterm">中期项目</a></li>
+                <li><a href="#final">期末项目</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
-        <h1>嵌入式系统作业日志</h1>
-        <p><strong>项目名称：</strong>智能小车控制</p>
-        <p><strong>作者：</strong>张三</p>
-        <p><strong>Gitee 仓库：</strong><a href="https://gitee.com/zhangsan/embedded-log" target="_blank">https://gitee.com/zhangsan/embedded-log</a></p>
+        <!-- 个人介绍  -->
+        <section id="profile" class="profile">
+            <div class="profile-avatar">
+                <img src="../照片/头像.jpg" alt="吕豪的头像" onerror="this.style.display='none'; this.parentElement.innerHTML='吕'; this.parentElement.style.background='linear-gradient(135deg, #0077ff, #00c6ff)'; this.parentElement.style.color='white'; this.parentElement.style.fontSize='3rem'; this.parentElement.style.fontWeight='700'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center';">
+            </div>
+            <div class="profile-content">
+                <h1>吕豪</h1>
+                <div class="subtitle">创客爱好者 · 嵌入式开发者 · 物联网探索者</div>
+                <p class="description">
+                    欢迎来到我的创客空间！我是一名热衷于硬件编程、嵌入式开发和物联网技术的学生。通过本博客，我将系统性地记录我在创客课程中的学习历程，从基础电路搭建到复杂的智能系统开发，分享每一个项目的技术细节、挑战突破和成长感悟。我相信"动手实践是最好的老师"，期待与您一同探索智能硬件的无限可能。
+                </p>
+                <div class="skills">
+                    <span>Arduino</span> / <span>STM32</span> / <span>ESP8266</span> / <span>树莓派</span> / <span>3D建模</span> / <span>电路设计</span> / <span>Python</span> / <span>C++</span>
+                </div>
+            </div>
+        </section>
 
-        <h2>作业记录</h2>
+        <!-- 课程过程（分阶段） -->
+        <section id="course" class="section">
+            <h2>📘 课程过程与DIY成果</h2>
+            <p style="font-size: 1.1rem; color: #334e68; margin-bottom: 2rem;">本课程采用循序渐进的学习路径，从基础电子知识到复杂系统集成，每个阶段都包含理论学习、动手实践和项目应用三个环节。</p>
 
-        <!-- 作业1 -->
-        <div class="entry">
-            <h3>作业一：环境搭建与LED闪烁</h3>
-            <p><strong>日期：</strong>2025-03-07</p>
-            <p><strong>内容：</strong>完成开发环境安装，编写第一个STM32程序，实现LED闪烁。</p>
-            <p><strong>相关文件：</strong></p>
+            <div class="phase">
+                <h3>第一阶段：电子基础与Arduino入门</h3>
+                <p>本阶段重点学习电子电路基本原理、Arduino编程基础以及常用传感器的工作原理。通过搭建光控灯、温湿度监测器等基础项目，掌握了数字/模拟信号的读取与处理，为后续复杂项目打下坚实基础。</p>
+                <p><strong>技术要点：</strong> GPIO控制、PWM调光、传感器数据采集、串口通信调试</p>
+                <ul class="file-list">
+                    <li>📁 嵌入式代码：<a href="../嵌入式代码/main.c" target="_blank">LED闪烁控制</a> · <a href="../嵌入式代码/main.c" target="_blank">温湿度监测器</a></li>
+                    <li>📷 项目照片：<a href="../照片/test.png" target="_blank">光控灯实物展示</a> · <a href="../照片/test.png" target="_blank">电路连接细节</a></li>
+                    <li>🎥 演示视频：<a href="https://www.bilibili.com/video/BV1aL4y1x7Qc" target="_blank">功能演示（B站）</a></li>
+                </ul>
+                <!-- <img src="../照片/test.png" alt="光控灯实物展示" class="project-img" style="max-width: 350px;"> -->
+            </div>
+
+            <div class="phase">
+                <h3>第二阶段：STM32嵌入式系统进阶</h3>
+                <p>深入学习STM32微控制器，掌握标准库编程方法，实现按键中断处理、PWM调速控制、定时器应用等核心功能。成功开发了智能风扇原型，实现了温度自适应调速和手动控制模式切换。</p>
+                <p><strong>技术要点：</strong> 中断处理机制、PWM波形生成、定时器配置、外设驱动开发</p>
+                <ul class="file-list">
+                    <li>📁 嵌入式代码：<a href="../嵌入式代码/main.c" target="_blank">PWM风扇控制</a> · <a href="../嵌入式代码/main.c" target="_blank">中断处理程序</a></li>
+                    <li>📁 设计图纸：<a href="../图纸/test.pdf" target="_blank">电路原理图（PDF）</a> · <a href="../图纸/test.pdf" target="_blank">PCB布局</a></li>
+                    <li>📷 项目照片：<a href="../照片/test.png" target="_blank">智能风扇原型</a> · <a href="../照片/test.png" target="_blank">内部结构</a></li>
+                </ul>
+            </div>
+
+            <div class="phase">
+                <h3>第三阶段：无线通信与物联网应用</h3>
+                <p>基于ESP8266 WiFi模块，构建完整的物联网系统。通过MQTT协议实现设备与云平台的稳定通信，开发了远程数据监测和智能控制功能，为智能家居应用奠定基础。</p>
+                <p><strong>技术要点：</strong> WiFi连接配置、MQTT协议栈、JSON数据格式、云端数据可视化</p>
+                <ul class="file-list">
+                    <li>📁 嵌入式代码：<a href="../嵌入式代码/main.c" target="_blank">ESP8266主程序</a> · <a href="../嵌入式代码/main.c" target="_blank">MQTT客户端</a></li>
+                    <li>📷 界面截图：<a href="../照片/test.png" target="_blank">手机控制界面</a> · <a href="../照片/test.png" target="_blank">Web监控面板</a></li>
+                    <li>🎥 功能演示：<a href="https://www.bilibili.com/video/BV1aL4y1x7Qc" target="_blank">远程控制演示</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 课程总结 -->
+        <section id="summary" class="section">
+            <h2>📝 课程总结与成长感悟</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.8;">通过系统性的创客课程学习，我不仅掌握了从基础电子到复杂物联网系统的完整开发流程，更重要的是培养了解决实际问题的能力。从最初的"点灯"实验到最终的智能小车项目，每一次调试都让我对软硬件协同工作有了更深的理解。</p>
+            
+            <div style="background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%); padding: 1.5rem; border-radius: 18px; margin: 1.5rem 0; border-left: 4px solid #0077ff;">
+                <h3 style="color: #0077ff; margin-top: 0;">💡 核心收获</h3>
+                <ul style="columns: 2; list-style: none; padding: 0; margin: 1rem 0;">
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">✓</span> Arduino/STM32嵌入式开发
+                    </li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">✓</span> 多传感器数据融合处理
+                    </li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">✓</span> WiFi/MQTT物联网通信
+                    </li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">✓</span> 电路设计与PCB制作
+                    </li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">✓</span> 3D建模与结构设计
+                    </li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">✓</span> Git版本控制协作
+                    </li>
+                </ul>
+            </div>
+            
+            <p style="font-size: 1.1rem; margin-top: 1.5rem;"><strong>未来规划：</strong>计划深入学习RTOS实时操作系统、边缘计算技术，并探索AI与硬件的深度融合应用，为智能物联网领域贡献更多创新解决方案。</p>
+        </section>
+
+        <!-- 中期项目 -->
+        <section id="midterm" class="section">
+            <h2>⚙️ 中期项目：智能家居控制终端</h2>
+            <p>本项目基于ESP8266 WiFi模块和MQTT通信协议，构建了一个完整的智能家居控制系统。系统包含硬件终端设计、云端服务平台搭建和移动端APP开发三个核心模块，实现了家电设备的远程监控和智能控制。</p>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 16px; margin: 1.5rem 0;">
+                <h4 style="color: #0077ff; margin-top: 0;">🔧 技术架构</h4>
+                <ul style="columns: 2; list-style: none; padding: 0; margin: 1rem 0;">
+                    <li style="margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">•</span> 硬件：ESP8266 + 继电器模块
+                    </li>
+                    <li style="margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">•</span> 通信：MQTT over WiFi
+                    </li>
+                    <li style="margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">•</span> 云端：EMQX消息服务器
+                    </li>
+                    <li style="margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">•</span> 移动端：MIT App Inventor
+                    </li>
+                </ul>
+            </div>
+            
             <ul class="file-list">
-                <li>📁 嵌入式代码：<a href="../嵌入式代码/led_blink.c" target="_blank">led_blink.c</a></li>
-                <li>📁 图纸：<a href="../图纸/原理图_v1.pdf" target="_blank">原理图_v1.pdf</a></li>
-                <li>📷 照片：<a href="../照片/led_test.jpg" target="_blank">led_test.jpg</a>（实物图）</li>
-                <li>🎥 视频：<a href="https://www.bilibili.com/video/BV1aL4y1x7Qc" target="_blank">演示视频（B站）</a></li>
+                <li>📁 嵌入式代码：<a href="../嵌入式代码/main.c" target="_blank">ESP8266主程序</a> · <a href="../嵌入式代码/main.c" target="_blank">MQTT客户端</a></li>
+                <li>📁 设计文件：<a href="../图纸/test.pdf" target="_blank">PCB工程文件</a> · <a href="../图纸/test.pdf" target="_blank">原理图设计</a></li>
+                <li>📷 项目照片：<a href="../照片/test.png" target="_blank">设备整体外观</a> · <a href="../照片/test.png" target="_blank">内部电路布局</a></li>
+                <li>🎥 功能演示：<a href="https://www.bilibili.com/video/BV1aL4y1x7Qc" target="_blank">远程控制演示（B站）</a></li>
             </ul>
-            <!-- 直接显示图片示例 -->
-            <img src="../照片/led_test.jpg" alt="LED测试照片" width="400">
-        </div>
+            <!-- <img src="../照片/test.png" alt="智能家居控制终端实物展示" class="project-img" style="max-width: 450px;"> -->
+        </section>
 
-        <!-- 作业2 -->
-        <div class="entry">
-            <h3>作业二：按键控制蜂鸣器</h3>
-            <p><strong>日期：</strong>2025-03-14</p>
-            <p><strong>内容：</strong>添加按键检测，按下时蜂鸣器鸣响。</p>
-            <p><strong>相关文件：</strong></p>
+        <!-- 期末项目 -->
+        <section id="final" class="section">
+            <h2>🚗 期末项目：智能循迹避障小车</h2>
+            <p>本项目基于STM32F103微控制器，开发了一款具备自主导航能力的智能小车。系统集成了多种传感器技术，实现了精确的循迹导航、智能避障和远程遥控功能，展示了嵌入式系统在机器人领域的应用潜力。</p>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 16px; margin: 1.5rem 0;">
+                <h4 style="color: #0077ff; margin-top: 0;">🎯 核心功能</h4>
+                <ul style="columns: 2; list-style: none; padding: 0; margin: 1rem 0;">
+                    <li style="margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">•</span> 红外循迹导航
+                    </li>
+                    <li style="margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">•</span> 超声波避障
+                    </li>
+                    <li style="margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">•</span> PID速度控制
+                    </li>
+                    <li style="margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #0077ff;">•</span> 蓝牙遥控
+                    </li>
+                </ul>
+            </div>
+            
             <ul class="file-list">
-                <li>📁 嵌入式代码：<a href="../嵌入式代码/buzzer.c" target="_blank">buzzer.c</a></li>
-                <li>📁 图纸：<a href="../图纸/按键电路.pdf" target="_blank">按键电路.pdf</a></li>
-                <li>📷 照片：<a href="../照片/buzzer_test.jpg" target="_blank">buzzer_test.jpg</a></li>
+                <li>📁 嵌入式代码：<a href="../嵌入式代码/main.c" target="_blank">主控制程序</a> · <a href="../嵌入式代码/main.c" target="_blank">PID算法实现</a></li>
+                <li>📁 设计文件：<a href="../图纸/test.pdf" target="_blank">完整电路图</a> · <a href="../图纸/test.pdf" target="_blank">3D打印模型</a></li>
+                <li>📷 项目照片：<a href="../照片/test.png" target="_blank">整车结构展示</a> · <a href="../照片/test.png" target="_blank">传感器布局</a></li>
+                <li>🎥 功能演示：<a href="https://www.bilibili.com/video/BV1aL4y1x7Qc" target="_blank">避障导航演示</a></li>
             </ul>
-        </div>
+        </section>
 
-        <!-- 更多作业... -->
-
-        <h2>文件索引</h2>
-        <p>仓库目录结构：</p>
-        <ul>
-            <li><a href="../嵌入式代码/" target="_blank">嵌入式代码/</a> - 所有源代码</li>
-            <li><a href="../图纸/" target="_blank">图纸/</a> - 硬件设计图纸</li>
-            <li><a href="../照片/" target="_blank">照片/</a> - 调试与实物照片</li>
-            <li><a href="../视频/" target="_blank">视频/</a> - 视频文件或链接文档</li>
-            <li><a href="index.html">html/index.html</a> - 日志入口（当前页）</li>
-        </ul>
-
-        <div class="footer">
-            &copy; 2025 张三 - 嵌入式作业日志
-        </div>
+        <footer>
+            <div style="margin-bottom: 1rem;">
+                <span style="font-size: 1.1rem; font-weight: 600;">💡 联系与交流</span>
+            </div>
+            © 2026 吕豪 · 创客日志 | 
+            <a href="https://gitee.com/palomadove/codestothings" target="_blank">Gitee项目仓库</a> · 
+            <a href="mailto:2381678310@qq.com">邮箱联系</a>
+            <br>
+            <span style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem; display: inline-block;">
+                项目入口：/html/index.html | 所有源码和资源文件均可在仓库中找到
+            </span>
+        </footer>
     </div>
+
+    <!-- 增强的JavaScript交互功能 -->
+    <script>
+        // 平滑滚动导航
+        document.querySelectorAll('.navbar a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 图片点击放大功能
+        document.querySelectorAll('.project-img').forEach(img => {
+            img.addEventListener('click', function() {
+                this.style.transform = this.style.transform === 'scale(1.5)' ? 'scale(1)' : 'scale(1.5)';
+                this.style.zIndex = this.style.zIndex === '1000' ? 'auto' : '1000';
+            });
+        });
+
+        // 页面加载动画
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // 回到顶部按钮（可选功能）
+        const scrollToTopBtn = document.createElement('button');
+        scrollToTopBtn.innerHTML = '↑';
+        scrollToTopBtn.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #0077ff;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,119,255,0.3);
+        `;
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.style.opacity = '1';
+                scrollToTopBtn.style.transform = 'translateY(0)';
+            } else {
+                scrollToTopBtn.style.opacity = '0';
+                scrollToTopBtn.style.transform = 'translateY(20px)';
+            }
+        });
+        
+        document.body.appendChild(scrollToTopBtn);
+    </script>
 </body>
 </html>
