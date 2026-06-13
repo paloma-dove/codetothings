@@ -13,6 +13,7 @@
 
 #### 使用说明
 1. 浏览器打开 HTML/index.html 即可查看网站
+2. 直接访问https://paloma-dove.github.io/codetothings/HTML/
 
 ---
 
