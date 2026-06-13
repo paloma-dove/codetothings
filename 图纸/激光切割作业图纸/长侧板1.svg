@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 222 95" width="222" height="95">
+  <defs><style>.cut { fill: none; stroke: black; stroke-width: 1.5; } .slot { fill: none; stroke: red; stroke-width: 1.5; } .text { font-family: Arial; font-size: 10px; fill: #333; }</style></defs>
+  <rect x="0" y="0" width="212" height="80" class="cut"/>
+  <!-- 左侧竖向插槽 -->
+  <rect x="3" y="12" width="3" height="12" class="slot"/>
+  <rect x="3" y="50" width="3" height="12" class="slot"/>
+  <!-- 右侧竖向插槽 -->
+  <rect x="206" y="12" width="3" height="12" class="slot"/>
+  <rect x="206" y="50" width="3" height="12" class="slot"/>
+  <!-- 底部水平插槽 -->
+  <rect x="25" y="74" width="12" height="3" class="slot"/>
+  <rect x="55" y="74" width="12" height="3" class="slot"/>
+  <rect x="85" y="74" width="12" height="3" class="slot"/>
+  <rect x="115" y="74" width="12" height="3" class="slot"/>
+  <rect x="145" y="74" width="12" height="3" class="slot"/>
+  <rect x="175" y="74" width="12" height="3" class="slot"/>
+  <text x="106" y="92" class="text" text-anchor="middle">前板 (212x80mm)</text>
+</svg>

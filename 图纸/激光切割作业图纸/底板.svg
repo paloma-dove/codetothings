@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -15 230 140" width="230" height="140">
+  <defs><style>.cut { fill: none; stroke: black; stroke-width: 1.5; stroke-linejoin: miter; } .text { font-family: Arial; font-size: 10px; fill: #333; }</style></defs>
+  <path class="cut" d="
+    M 0 0
+    L 19 0 L 19 -10 L 31 -10 L 31 0
+    L 49 0 L 49 -10 L 61 -10 L 61 0
+    L 79 0 L 79 -10 L 91 -10 L 91 0
+    L 109 0 L 109 -10 L 121 -10 L 121 0
+    L 139 0 L 139 -10 L 151 -10 L 151 0
+    L 169 0 L 169 -10 L 181 -10 L 181 0
+    L 200 0
+    L 200 14 L 210 14 L 210 26 L 200 26
+    L 200 44 L 210 44 L 210 56 L 200 56
+    L 200 74 L 210 74 L 210 86 L 200 86
+    L 200 100
+    L 181 100 L 181 110 L 169 110 L 169 100
+    L 151 100 L 151 110 L 139 110 L 139 100
+    L 121 100 L 121 110 L 109 110 L 109 100
+    L 91 100 L 91 110 L 79 110 L 79 100
+    L 61 100 L 61 110 L 49 110 L 49 100
+    L 31 100 L 31 110 L 19 110 L 19 100
+    L 0 100
+    L 0 86 L -10 86 L -10 74 L 0 74
+    L 0 56 L -10 56 L -10 44 L 0 44
+    L 0 26 L -10 26 L -10 14 L 0 14
+    L 0 0 Z" />
+  <text x="100" y="125" class="text" text-anchor="middle">底板 (200x100mm) 凸起12×10mm</text>
+</svg>
