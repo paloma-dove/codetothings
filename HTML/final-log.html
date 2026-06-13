@@ -257,6 +257,86 @@
             color: #27ae60;
             margin-bottom: 1rem;
         }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+        }
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #569cd6; }
+        .code-block .function { color: #dcdcaa; }
+        .code-block .string { color: #ce9178; }
+        .code-block .number { color: #b5cea8; }
+        .idea-card {
+            background: linear-gradient(135deg, #fff7e6 0%, #ffe7ba 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #faad14;
+        }
+        .idea-card h4 {
+            color: #d48806;
+            margin-bottom: 0.8rem;
+        }
+        .idea-card.selected {
+            background: linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%);
+            border-left-color: #1890ff;
+        }
+        .idea-card.selected h4 {
+            color: #0050b3;
+        }
+        .navbar .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .navbar .dropdown > a::after {
+            content: " ▼";
+            font-size: 0.7em;
+            opacity: 0.5;
+        }
+        .navbar .dropdown-content {
+            display: none !important;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            z-index: 1001;
+            padding: 0.5rem 0;
+            margin-top: 0.2rem;
+            list-style: none;
+        }
+        .navbar .dropdown-content li {
+            display: block !important;
+            padding: 0 !important;
+            white-space: nowrap;
+            margin: 0 !important;
+        }
+        .navbar .dropdown-content li a {
+            display: block;
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            margin: 0.2rem 0.5rem;
+        }
+        .navbar .dropdown-content li a:hover {
+            color: #0077ff;
+            background: rgba(0, 119, 255, 0.05);
+        }
+        .navbar .dropdown:hover > .dropdown-content {
+            display: block !important;
+        }
         footer {
             text-align: center;
             margin: 4rem 0 2rem;
@@ -334,10 +414,30 @@
             <a href="#" class="logo">📖 开发日志</a>
             <ul>
                 <li><a href="index.html">← 返回主页</a></li>
-                <li><a href="#overview">项目概述</a></li>
-                <li><a href="#team">团队信息</a></li>
-                <li><a href="#timeline">开发历程</a></li>
-                <li><a href="#failures">问题与解决</a></li>
+                <li class="dropdown">
+                    <a href="#overview">项目介绍</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#overview">项目概述</a></li>
+                        <li><a href="#team">团队信息</a></li>
+                        <li><a href="#idea">方案分析</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#hardware">项目实现</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#hardware">硬件清单</a></li>
+                        <li><a href="#setup">安装使用</a></li>
+                        <li><a href="#timeline">开发历程</a></li>
+                    </ul>
+                </li>
+                <li><a href="#future">未来展望</a></li>
+                <li class="dropdown">
+                    <a href="#failures">技术支持</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#failures">问题与解决</a></li>
+                        <li><a href="#demo">演示FAQ</a></li>
+                    </ul>
+                </li>
                 <li><a href="#resources">资源文件</a></li>
             </ul>
         </div>
@@ -353,7 +453,7 @@
             <h2>🎯 项目概述</h2>
             <div class="timeline-card">
                 <h3>项目简介</h3>
-                <p>本项目利用光线传感器和FSR薄膜压力传感器，设计了一款智能夜间感应LED灯。系统通过光线传感器判断环境亮度，在熄灯后自动进入待机状态；当检测到有人下床踩踏FSR传感器时，自动点亮LED灯，方便夜间行走，避免打扰室友休息。</p>
+                <p>本项目利用光线传感器和FSR薄膜压力传感器，设计了一款智能夜间感应LED灯。系统通过光线传感器判断环境亮度，在熄灯后自动进入待机模式；当检测到有人下床踩踏FSR传感器时，自动点亮LED灯，方便夜间行走，避免打扰室友休息。</p>
                 <img src="../照片/期末项目图/期末项目实物图.jpg" alt="项目实物图" class="project-img" style="max-width: 500px;">
             </div>
         </section>
@@ -402,42 +502,210 @@
             </div>
         </section>
 
+        <section id="idea" class="section">
+            <h2>💡 Hackathon 方案分析与选择</h2>
+            <div class="timeline-card">
+                <h3>方案 brainstorm</h3>
+                <p>在 6月12日 的 Hackathon 活动中，我们团队进行了头脑风暴，以下是我们讨论过的几个方案：</p>
+                
+                <div class="idea-card" style="margin-top: 1.5rem;">
+                    <h4>方案一：智能浇花系统</h4>
+                    <ul>
+                        <li><strong>功能：</strong>土壤湿度监测、自动浇水、光照检测</li>
+                        <li><strong>优点：</strong>实用性强、技术相对成熟</li>
+                        <li><strong>缺点：</strong>需要水泵等设备、成本较高、不适用于宿舍场景</li>
+                    </ul>
+                </div>
+
+                <div class="idea-card">
+                    <h4>方案二：桌面智能收纳盒</h4>
+                    <ul>
+                        <li><strong>功能：</strong>物品识别、自动分类、LED指示</li>
+                        <li><strong>优点：</strong>有创意、3D打印需求高</li>
+                        <li><strong>缺点：</strong>计算机视觉难度大、时间紧张</li>
+                    </ul>
+                </div>
+
+                <div class="idea-card selected">
+                    <h4>方案三：宿舍夜间感应LED灯 ✓（最终选择）</h4>
+                    <ul>
+                        <li><strong>功能：</strong>光线检测、压力感应、自动亮灯</li>
+                        <li><strong>优点：</strong>贴近生活、实用性强、技术难度适中、所需材料易得</li>
+                        <li><strong>确定时间：</strong>6月12日 14:30</li>
+                    </ul>
+                </div>
+
+                <div class="idea-card">
+                    <h4>方案四：智能垃圾桶</h4>
+                    <ul>
+                        <li><strong>功能：</strong>自动开盖、满溢检测</li>
+                        <li><strong>优点：</strong>卫生、自动化</li>
+                        <li><strong>缺点：</strong>机械结构复杂、舵机声音大</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-card" style="margin-top: 2rem;">
+                <h3>最终方案确定</h3>
+                <p>经过团队讨论和投票，我们最终选择了方案三。主要理由如下：</p>
+                <ul>
+                    <li>✅ 解决真实痛点：宿舍夜间起夜确实需要不打扰室友的照明方案</li>
+                    <li>✅ 技术可行：Arduino + 传感器的组合在我们能力范围内</li>
+                    <li>✅ 时间可控：可以在 24小时 Hackathon 期间完成</li>
+                    <li>✅ 材料易得：不需要特殊设备，课程提供的基础开发包即可实现</li>
+                </ul>
+
+                <div style="background: #e6f7ff; padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem;">
+                    <h4 style="color: #0050b3; margin-bottom: 0.8rem;">📋 功能规划</h4>
+                    <ul>
+                        <li>🔆 光线传感器：判断是否是夜间，只有天黑时才工作</li>
+                        <li>👣 FSR压力传感器：检测下床踩踏动作</li>
+                        <li>💡 WS2812 LED灯带：提供柔和照明</li>
+                        <li>⏱️ 自动熄灭：30秒无人操作自动关闭</li>
+                        <li>🖨️ 3D打印外壳：美观实用</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="hardware" class="section">
+            <h2>📦 硬件清单与系统原理</h2>
+            <div class="timeline-card">
+                <h3>🧰 物料清单（BOM）</h3>
+                <ul style="margin-bottom: 1.5rem;">
+                    <li><strong>Arduino 开发板</strong> x 1 - 主控单元</li>
+                    <li><strong>WS2812 LED 灯带</strong> x 1 条（约 30 灯珠）- 提供照明</li>
+                    <li><strong>光线传感器（LDR）</strong> x 1 - 检测环境亮度</li>
+                    <li><strong>FSR 薄膜压力传感器</strong> x 1 - 检测踩踏动作</li>
+                    <li><strong>杜邦线/面包板</strong> 若干 - 电路连接</li>
+                    <li><strong>3D 打印结构件</strong> - 外壳、盖子、梯子结构</li>
+                    <li><strong>电源/电池</strong> - 供电单元</li>
+                </ul>
+
+                <h3>⚡ 系统原理与连接</h3>
+                <div style="background: #f6ffed; padding: 1.2rem; border-radius: 10px; margin-top: 1rem;">
+                    <h4 style="color: #237804; margin-bottom: 0.8rem;">引脚连接</h4>
+                    <ul style="margin-bottom: 0;">
+                        <li><strong>LED 灯带</strong> → GPIO 18</li>
+                        <li><strong>光线传感器</strong> → GPIO 4（模拟输入）</li>
+                        <li><strong>FSR 压力传感器</strong> → GPIO 5（模拟输入）</li>
+                        <li><strong>电源</strong> → VCC / GND</li>
+                    </ul>
+                </div>
+
+                <div style="background: #fff7e6; padding: 1.2rem; border-radius: 10px; margin-top: 1.2rem;">
+                    <h4 style="color: #d46b08; margin-bottom: 0.8rem;">工作流程</h4>
+                    <ol style="margin-bottom: 0;">
+                        <li>光线传感器持续监测环境亮度</li>
+                        <li>如果环境变暗（熄灯后），系统进入待机模式</li>
+                        <li>FSR 传感器监测是否有踩踏动作</li>
+                        <li>检测到压力后，点亮 LED 灯带（暖橙色光）</li>
+                        <li>30 秒内无操作自动熄灭</li>
+                        <li>如果在 LED 点亮时再次踩踏，也可以手动熄灭</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="setup" class="section">
+            <h2>🔧 安装与使用</h2>
+            <div class="timeline-card">
+                <h3>📥 软件依赖</h3>
+                <ul style="margin-bottom: 1.5rem;">
+                    <li><strong>Adafruit NeoPixel 库</strong> - 用于驱动 WS2812 LED 灯带</li>
+                    <li>Arduino IDE（或 PlatformIO）- 用于烧录程序</li>
+                </ul>
+
+                <h3>💻 快速开始</h3>
+                <ol>
+                    <li>按照「硬件清单」连接所有元器件</li>
+                    <li>3D 打印外壳、盖子和梯子结构</li>
+                    <li>将 Arduino 代码烧录到开发板</li>
+                    <li>把所有组件安装到 3D 打印的外壳中</li>
+                    <li>将 FSR 传感器放置在梯子结构上，放在床边</li>
+                    <li>通电测试！</li>
+                </ol>
+
+                <div style="background: #e6f7ff; padding: 1.2rem; border-radius: 10px; margin-top: 1.2rem;">
+                    <h4 style="color: #0050b3; margin-bottom: 0.8rem;">💡 使用提示</h4>
+                    <ul style="margin-bottom: 0;">
+                        <li>确保 FSR 传感器放置在脚会踩到的位置</li>
+                        <li>可以通过代码调整 LED 亮度和颜色</li>
+                        <li>可以通过代码调整 30 秒的自动熄灭时间</li>
+                        <li>建议使用 USB 移动电源供电，更灵活</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <section id="timeline" class="section">
             <h2>📅 开发历程</h2>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="date">6月12日 15:00</span>
-                        <h3>📝 项目启动与方案设计</h3>
-                        <p>参与Hackathon活动，确定项目主题和技术方案。</p>
+                        <span class="date">6月12日 14:00 - 15:00</span>
+                        <h3>💭 方案确定与分工</h3>
+                        <p>团队头脑风暴，确定项目方案并进行初始分工。</p>
                         <ul>
                             <li>确定使用Arduino作为主控平台</li>
                             <li>选择光线传感器和FSR压力传感器</li>
-                            <li>设计3D打印外壳方案</li>
+                            <li>完成团队分工，明确各人职责</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="date">6月12日 16:30</span>
-                        <h3>🔧 硬件组装与电路搭建</h3>
+                        <span class="date">6月12日 15:00 - 16:30</span>
+                        <h3>📐 结构设计与3D建模</h3>
+                        <p>开始设计外壳结构并进行3D建模。</p>
+                        <ul>
+                            <li>设计盒子主体（可容纳Arduino和电池）</li>
+                            <li>设计盖子（方便打开调试）</li>
+                            <li>设计梯子形状的FSR放置位置</li>
+                        </ul>
+                        <img src="../照片/期末项目完成过程图.jpg" alt="开发过程图" class="project-img" style="max-width: 600px;">
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="date">6月12日 16:30 - 18:00</span>
+                        <h3>🔌 硬件组装与电路搭建</h3>
                         <p>开始硬件部分的组装工作。</p>
                         <ul>
                             <li>连接Arduino主板</li>
-                            <li>搭建光线传感器电路</li>
-                            <li>连接FSR薄膜压力传感器</li>
-                            <li>焊接LED灯模块</li>
+                            <li>搭建光线传感器（LDR）电路到GPIO 4</li>
+                            <li>连接FSR薄膜压力传感器到GPIO 5</li>
+                            <li>焊接WS2812 LED灯带到GPIO 18</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="date">6月12日 18:00</span>
+                        <span class="date">6月12日 18:00 - 20:00</span>
                         <h3>💻 软件开发与调试</h3>
                         <p>编写Arduino程序代码。</p>
-                        <ul>
+                        <h4 style="margin-top: 1rem; margin-bottom: 0.8rem; color: #0a1929;">核心代码片段：</h4>
+                        <div class="code-block">
+<span class="comment">// --- 引脚定义与灯带参数配置 ---</span>
+<span class="keyword">#define</span> LED_PIN    <span class="number">18</span>          
+<span class="keyword">#define</span> LED_COUNT  <span class="number">30</span>           
+<span class="keyword">#define</span> LED_BRIGHTNESS <span class="number">25</span>    
+
+<span class="comment">// 创建 NeoPixel 对象</span>
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+
+<span class="keyword">#define</span> LDR_PIN     <span class="number">4</span>         
+<span class="keyword">#define</span> FSR_PIN    <span class="number">5</span>      
+
+<span class="comment">// 控制状态变量</span>
+<span class="keyword">bool</span> ledIsOn = <span class="keyword">false</span>;              
+<span class="keyword">bool</span> pressureDetected = <span class="keyword">false</span>;     
+<span class="keyword">const unsigned long</span> AUTO_OFF_TIME = <span class="number">30000</span>; <span class="comment">// 自动熄灭时间30秒</span>
+                        </div>
+                        <ul style="margin-top: 1.5rem;">
                             <li>实现光线传感器数据读取</li>
                             <li>开发FSR压力检测逻辑</li>
                             <li>编写LED灯控制算法</li>
@@ -448,29 +716,43 @@
 
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="date">6月13日 9:00</span>
+                        <span class="date">6月13日 9:00 - 12:00</span>
                         <h3>🖨️ 3D打印与结构优化</h3>
                         <p>完成外壳的3D打印和结构组装。</p>
                         <ul>
-                            <li>打印盒子主体结构</li>
+                            <li>打印盒子主体结构（STL文件）</li>
                             <li>打印盖子部件</li>
+                            <li>打印梯子形状的FSR放置结构</li>
                             <li>组装所有零部件</li>
-                            <li>优化传感器布局</li>
+                            <li>优化传感器布局和布线</li>
                         </ul>
-                        <img src="../照片/期末项目完成过程图.jpg" alt="开发过程图" class="project-img" style="max-width: 600px;">
                     </div>
                 </div>
 
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="date">6月13日 14:00</span>
-                        <h3>✅ 最终测试与优化</h3>
+                        <span class="date">6月13日 12:00 - 14:00</span>
+                        <h3>🧪 系统测试与调试</h3>
                         <p>进行完整的系统测试和功能优化。</p>
                         <ul>
-                            <li>测试光线感应灵敏度</li>
-                            <li>调整FSR压力阈值</li>
-                            <li>优化LED亮度控制</li>
+                            <li>测试光线感应灵敏度，调整阈值</li>
+                            <li>测试FSR压力检测，调整触发阈值</li>
+                            <li>优化LED亮度和颜色（使用温暖的橙色光）</li>
+                            <li>测试自动熄灭功能（30秒）</li>
+                            <li>进行多次真实场景测试</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="date">6月13日 14:00 - 15:00</span>
+                        <h3>🎬 最终演示与记录</h3>
+                        <p>录制功能演示视频，完成项目文档。</p>
+                        <ul>
                             <li>录制功能演示视频</li>
+                            <li>整理项目文档</li>
+                            <li>准备最终展示材料</li>
                         </ul>
                     </div>
                 </div>
@@ -507,14 +789,125 @@
 
             <div class="timeline-card" style="margin-top: 1.5rem;">
                 <h3>📚 经验总结</h3>
-                <p>通过这次项目开发，我学到了很多宝贵的经验：</p>
+                <p>通过这次项目开发，我们学到了很多宝贵的经验：</p>
                 <ul>
                     <li>硬件开发中遇到问题是常态，关键是要有耐心和系统的调试方法</li>
                     <li>传感器的选型和参数设置需要根据实际使用场景反复测试</li>
                     <li>3D打印前要仔细检查模型尺寸，预留装配余量</li>
                     <li>模块化设计有助于快速定位和解决问题</li>
                     <li>及时记录开发过程和遇到的问题非常重要</li>
+                    <li>团队协作可以大大提高效率，分工合作很重要</li>
                 </ul>
+            </div>
+        </section>
+
+        <section id="future" class="section">
+            <h2>🚀 未来展望与优化空间</h2>
+            
+            <div class="timeline-card">
+                <h3>✨ 功能增强建议</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                    <div style="background: #f6ffed; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #52c41a;">
+                        <h4 style="color: #237804; margin-bottom: 0.8rem;">🎨 个性化灯光控制</h4>
+                        <ul style="font-size: 0.95rem;">
+                            <li>支持多种颜色模式选择</li>
+                            <li>呼吸灯效果</li>
+                            <li>根据压力大小调节亮度</li>
+                        </ul>
+                    </div>
+                    <div style="background: #e6f7ff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #1890ff;">
+                        <h4 style="color: #0050b3; margin-bottom: 0.8rem;">📊 使用记录功能</h4>
+                        <ul style="font-size: 0.95rem;">
+                            <li>记录每天起床时间</li>
+                            <li>统计使用频率</li>
+                            <li>生成睡眠质量报告</li>
+                        </ul>
+                    </div>
+                    <div style="background: #fff7e6; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #fa8c16;">
+                        <h4 style="color: #d46b08; margin-bottom: 0.8rem;">🔋 电源优化</h4>
+                        <ul style="font-size: 0.95rem;">
+                            <li>使用锂电池供电</li>
+                            <li>低功耗模式</li>
+                            <li>USB-C充电接口</li>
+                        </ul>
+                    </div>
+                    <div style="background: #fff0f6; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #eb2f96;">
+                        <h4 style="color: #c41d7f; margin-bottom: 0.8rem;">📱 手机连接</h4>
+                        <ul style="font-size: 0.95rem;">
+                            <li>Bluetooth或WiFi连接</li>
+                            <li>手机App远程控制</li>
+                            <li>参数在线调节</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f9f0ff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #722ed1;">
+                        <h4 style="color: #531dab; margin-bottom: 0.8rem;">🔍 更多传感器</h4>
+                        <ul style="font-size: 0.95rem;">
+                            <li>人体红外传感器（PIR）</li>
+                            <li>声音检测</li>
+                            <li>温度湿度监测</li>
+                        </ul>
+                    </div>
+                    <div style="background: #e6fffb; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #13c2c2;">
+                        <h4 style="color: #006d75; margin-bottom: 0.8rem;">📏 体积优化</h4>
+                        <ul style="font-size: 0.95rem;">
+                            <li>使用更小的开发板（如ESP32-S2-Mini）</li>
+                            <li>设计更紧凑的外壳</li>
+                            <li>模块化设计便于维护</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-card" style="margin-top: 2rem;">
+                <h3>🎯 技术改进方向</h3>
+                <ul>
+                    <li><strong>硬件层面：</strong>考虑使用PCB代替面包板，提高稳定性</li>
+                    <li><strong>软件层面：</strong>使用RTOS实时操作系统，优化任务调度</li>
+                    <li><strong>通信层面：</strong>添加MQTT协议，支持IoT云端控制</li>
+                    <li><strong>AI层面：</strong>学习用户习惯，预测起床时间</li>
+                </ul>
+
+                <div style="background: #f5f7fa; padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem;">
+                    <h4 style="color: #34495e; margin-bottom: 0.8rem;">💭 一句话总结</h4>
+                    <p style="font-size: 1.1rem; color: #2c3e50;">
+                        "从一个简单的想法开始，通过团队协作和不断尝试，我们把它变成了现实。这个过程让我们明白，动手实践是最好的学习方式！"
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="section">
+            <h2>🎬 演示与常见问题</h2>
+            <div class="timeline-card">
+                <h3>📹 功能演示</h3>
+                <p style="margin-bottom: 1.5rem;">项目演示视频已上传，包含以下内容：</p>
+                <ul style="margin-bottom: 1.5rem;">
+                    <li>系统正常工作流程展示</li>
+                    <li>光线传感器工作效果</li>
+                    <li>FSR压力传感器触发演示</li>
+                    <li>LED灯带点亮效果</li>
+                </ul>
+
+                <h3>❓ 常见问题（FAQ）</h3>
+                <div style="background: #f6ffed; padding: 1.2rem; border-radius: 10px; margin-top: 1.2rem;">
+                    <h4 style="color: #237804; margin-bottom: 0.5rem;">Q: FSR 传感器不够灵敏怎么办？</h4>
+                    <p style="color: #237804; margin-bottom: 1rem;">A: 可以调整代码中的压力阈值，或者增加传感器与脚的接触面积。</p>
+                </div>
+
+                <div style="background: #fff7e6; padding: 1.2rem; border-radius: 10px; margin-top: 1rem;">
+                    <h4 style="color: #d46b08; margin-bottom: 0.5rem;">Q: LED 灯带颜色不对或闪烁？</h4>
+                    <p style="color: #d46b08; margin-bottom: 1rem;">A: 请检查 LED 灯带型号，确保使用正确的库和参数。部分灯带可能是 RGB 或 RBG 顺序。</p>
+                </div>
+
+                <div style="background: #e6f7ff; padding: 1.2rem; border-radius: 10px; margin-top: 1rem;">
+                    <h4 style="color: #0050b3; margin-bottom: 0.5rem;">Q: 如何改变 LED 亮度和颜色？</h4>
+                    <p style="color: #0050b3; margin-bottom: 0.5rem;">A: 修改代码中的 LED_BRIGHTNESS 宏定义，以及 setPixelColor() 函数中的 RGB 值。</p>
+                </div>
+
+                <div style="background: #fff0f6; padding: 1.2rem; border-radius: 10px; margin-top: 1rem;">
+                    <h4 style="color: #c41d7f; margin-bottom: 0.5rem;">Q: 如何调整自动熄灭时间？</h4>
+                    <p style="color: #c41d7f;">A: 修改 AUTO_OFF_TIME 常量的值（单位是毫秒）。</p>
+                </div>
             </div>
         </section>
 
